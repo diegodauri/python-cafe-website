@@ -1,0 +1,79 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>All Cafes</h1>
+
+	  <table class="table">
+          <!-- This is where you will write the code to render a Bootstrap 
+          Table that contains all the information from the 
+          cafe-data.csv file. -->
+           <tr>
+                <td>Cafe Name</td>
+                <td>Location</td>
+                <td>Image</td>
+                <td>Location</td>
+                <td>Has Sockets</td>
+                <td>Has Toilet</td>
+                <td>Has Wifi</td>
+                <td>Can take calls</td>
+                <td>Seats</td>
+                <td>Coffee price</td>
+                <td>Delete</td>
+            </tr>
+          {% for cafe in cafes: %}
+            <tr>
+                <td><a href="{{ url_for('edit', id=cafe.id) }}">{{ cafe.name }}</a></td>
+                <td><a href="{{ cafe.map_url }}">Maps Link</a></td>
+                <td><a href="{{ cafe.img_url }}">Show Image</a></td>
+                <td>{{ cafe.location }}</td>
+
+                {% if cafe.has_sockets %}
+                    <td>✔</td>
+                {% else %}
+                    <td>❌</td>
+                {% endif %}
+
+                {% if cafe.has_toilet %}
+                    <td>✔</td>
+                {% else %}
+                    <td>❌</td>
+                {% endif %}
+
+                {% if cafe.has_wifi %}
+                    <td>✔</td>
+                {% else %}
+                    <td>❌</td>
+                {% endif %}
+
+                {% if cafe.can_take_calls %}
+                    <td>✔</td>
+                {% else %}
+                    <td>❌</td>
+                {% endif %}
+
+                <td>{{ cafe.seats }}</td>
+                <td>{{ cafe.coffee_price }}</td>
+                <td><a href="{{ url_for('delete', id=cafe.id) }}">Delete</a></td>
+            </tr>
+          {% endfor %}
+  	  </table>
+
+      <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
